@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bowlby+One+SC&family=Carter+One&family=Fjalla+One&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+.container-register{
+    width: 500px;
+    height: 844px;
+    border-radius: 1.5rem;
+    background-color: #E1F3FB;
+    display: flex;
+    flex-direction: column;   
+}
+.sinup-back{
+    cursor: pointer;
+    margin-top: 2rem;
+    margin-left: 1rem;
+    color: #444f53;
+}
+.sinup-back:hover{
+    color: #576569;
+}
+.image-formulario-singup{
+    
+    width: 200px;
+    height: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.text-singup{
+    color:  #444f53;;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 20px;
+    margin-right: 16rem;
+}
+.text-credential{
+    color: #74858d;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    margin-right: 1.9rem;
+}
+.container-form{
+    margin-top: 5rem;
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+}
+.fomr{
+    display: flex;
+    flex-direction: column;
+}
+.label-form{
+    margin-top: 1rem;
+    font-family: "Roboto", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+    color: #083649;
+}
+.inpunt-form{
+    width: 20rem;
+    outline-style: none;
+    border: 0;
+    border-radius: 0.2rem;
+    height: 2rem;
+}
+.btn-register{
+    background-color: rgb(114, 131, 148);
+    margin-top: 2rem;
+    width: 20rem;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    margin-left: 4.1rem;    
+}
+.btn-register:hover{
+    background-color: #a763eb;
+    color: #E1F3FB;
+    transition: 1s;
+}

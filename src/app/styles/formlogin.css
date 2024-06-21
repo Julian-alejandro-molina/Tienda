@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Carter+One&family=Fjalla+One&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Fjalla+One&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bowlby+One+SC&family=Carter+One&family=Fjalla+One&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+.container-formlogin {
+    width: 500px;
+    height: 844px;
+    border-radius: 1.5rem;
+    background-color: #E1F3FB;
+    display: flex;
+    flex-direction: column;
+    
+    align-items: center;
+}
+.back{
+    cursor: pointer;
+    margin-top: 2rem;
+    margin-right: 27rem;
+    color: #444f53;
+    
+}
+
+.back:hover{
+    color: #576569;
+}
+.image-email{
+    margin-top: 5rem;
+    width: 10rem;
+    height: 10rem;
+    
+}
+
+.shope {
+    color: #444f53;
+    margin-right: 16.8rem;
+    margin-top: 5rem;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 20px;
+}
+
+.enter-login {
+    color: #74858d;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    margin-right: 6.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.label-username {
+    margin-right: 16.8rem;
+    font-family: "Roboto", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+    color: #083649;
+}
+
+.input-username {
+    width: 20rem;
+    outline-style: none;
+    border: 0;
+    border-radius: 0.2rem;
+    height: 2rem;
+}
+
+.label-password {
+    margin-right: 4.9rem;
+    margin-top: 1rem;
+    font-family: "Roboto", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+    color: #083649;
+}
+
+.input-password {
+    width: 20rem;
+    height: 2rem;
+    border: 0;
+    border-radius: 0.2rem;
+    outline-style: none;
+}
+
+.btn-login {
+    background-color: rgb(114, 131, 148);
+    margin-top: 2rem;
+    width: 20rem;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+
+}
+.btn-login:hover{
+    background-color: rgb(89, 133, 177);
+    color: #E1F3FB;
+    transition: 1s;
+}
+.sing-up{
+    margin-top: 1rem;
+    margin-left: 13.8rem;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #444f53;
+    text-decoration: none;
+    
+}
+.link{
+    text-decoration: none;  
+}
+.sing-up:hover{
+    color: #889ba1; 
+}

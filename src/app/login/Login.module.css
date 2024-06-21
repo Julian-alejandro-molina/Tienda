@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Fjalla+One&family=Roboto+Slab:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+.containerlogin {
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 2rem;
+    background-color: #E1F3FB;
+    width: 500px;
+    height: 844px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.containerLoginLogo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #58C1EE;
+    height: 25rem;
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
+    border-bottom-left-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+}
+
+.imgLogin {
+    width: 11rem;
+    height: 11rem;
+}
+
+.linkvisitante {
+    text-decoration: none;
+}
+
+.containerLoginRegister {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    margin-top: 23rem;
+    height: 29rem;
+    width: 27rem;
+    margin-left: 2rem;
+    border-radius: 2rem;
+    background-color: #E6F1FA;
+    box-shadow: 0.5px 2px 2px rgb(85, 85, 85);
+    
+}
+
+.continue {
+    margin-top: 3rem;
+}
+
+.buttonLongin {
+    width: 20rem;
+    height: 3rem;
+    margin-top: 11rem;
+    border-radius: 0.5rem;
+    border: 0;
+    font-family: sans-serif;
+    font-size: 1.5rem;
+    background-color: #59B5DC;
+    color: #DEDEDE;
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 22px;
+}
+
+.buttonLongin:hover {
+    background-color: #60c5f0;
+}
+
+.buttonregister {
+    width: 20rem;
+    width: 20rem;
+    height: 3rem;
+    margin-top: 2rem;
+    border-radius: 0.5rem;
+    border: 0;
+    font-family: sans-serif;
+    font-size: 1.5rem;
+    background-color: #287CA0;
+    color: #DEDEDE;
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 22px;
+}
+
+.buttonregister:hover {
+    background-color: #3195c0;
+
+}
+
+.continue {
+    cursor: pointer;
+    color: #59B5DC;
+}
+
+.continue:hover {
+    color: #63c8f3;
+}
