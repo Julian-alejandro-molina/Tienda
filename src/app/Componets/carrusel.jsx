@@ -1,5 +1,6 @@
 'use client'
 import React, { useState } from 'react';
+import '@/app/styles/carousel.css'
 import {
   Carousel,
   CarouselItem,
@@ -56,8 +57,9 @@ export default function Carrusel(args) {
         onExiting={() => setAnimating(true)}
         onExited={() => setAnimating(false)}
         key={item.src}
+        className='carousel'
       >
-        <img src={item.src} alt={item.altText} />
+        <img className='img-carousel' src={item.src} alt={item.altText} />
         <CarouselCaption
           captionText={item.caption}
           captionHeader={item.caption}
