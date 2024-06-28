@@ -4,13 +4,14 @@ import Image from "next/image";
 import { IoIosArrowBack } from "react-icons/io";
 import Link from 'next/link';
 import { useState } from 'react';
+import ValidationPassword from '@/app/Tools/validationPassword';
 export default function SingUp(params) {
     const [username, setUsername] = useState('');
     const [useremail, setUserEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordconfir, setPasswordConfir] = useState('');
-    const [error, setError] = useState('')
-    const [register, setRegister]=useState([])
+    const [error, setError] = useState(null)
+    const [register, setRegister] = useState([])
 
     function Data(username, useremail) {
 
@@ -24,7 +25,7 @@ export default function SingUp(params) {
         console.log(DataRegister);
         const regex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
         const result = regex.exec(useremail)// Nos perimite buscar una coincidencia con la cadena(regex) anterior
-
+        
         if (useremail === '' || username === '' || password === '' || passwordconfir === '') {
             alert('los campos esta vaios!!.');
             setError(alert);
@@ -37,11 +38,11 @@ export default function SingUp(params) {
             setError('Correo electronico no valido ')
             alert(error)
         }
-        if (password.length < 8) {
+        /*if (password.length < 8) {
             setError('La contraseña debe ser de almenos 8 caracteres');
             alert(error);
             return;
-        }
+        }*/
         if (passwordconfir != password) {
             setError('Las contraseñas no coinciden');
             alert(error);
@@ -49,28 +50,45 @@ export default function SingUp(params) {
         }
         if (register.length > 0) {
             const emailExists = register.some(element => element.useremail_f === useremail);// some() es un método de array que verifica si al menos un elemento en el array cumple con la condición proporcionada. Devuelve true si se encuentra un elemento que cumple con la condición y false en caso contrario.
+            const passwordExists = register.some(element => element.password_f=== password);
             if (emailExists) {
                 setError('Este correo electronico ya esta registrado')
                 alert(error)
-            } else {
+                return;
+            } 
+            if (passwordExists) {
+                setError('Esta  contraseña ya esta registrada')
+                alert(error)
+                return;
+            }
+            else {
 
                 setRegister(e => [...e, DataRegister])//  Esta es una función que toma el estado anterior como argumento (e) y devuelve un nuevo array que contiene todos los elementos del array anterior (e) más un nuevo elemento (newData).
             }
         } else {
-            setRegister(e => [...e,DataRegister])
+            setRegister(e => [...e, DataRegister])
         }
-       console.log(register);
     }
-console.log('hola');
+    console.log(register);
+//---------LIMPIAMOS LOS INPUTS A TREVES DE SUS ESTADOS 
+    const CleanInputs=()=>{
+        setUsername('');
+        setUserEmail('');
+        setPassword('');
+        setPasswordConfir('');
+    }
+//--------------EJECUTAMOS LA FUNSION CON LOS ARGUMENTOS ENVIADOS-------------------------
     const Ejecut = () => {
         Data(username, useremail)
+        CleanInputs();
+        ValidationPassword(password)
     }
 
     return (
         <>
             <div className="container container-register">
                 <Link href='/formlogin/iniciar'><IoIosArrowBack className='sinup-back' /></Link>
-                <Image className='image-formulario-singup' src="/images/formulario.png" alt="img-login" width={500} height={500} />
+                <Image className='image-formulario-singup' src="/images/formulario.png" alt="img-login" width={500} height={500} priority />
                 <main className="container col" role="main" tabIndex="0">
 
                     <div className='container-form'>
