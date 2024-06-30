@@ -5,6 +5,16 @@ import { IoIosArrowBack } from "react-icons/io";
 import Link from 'next/link';
 import { useState } from 'react';
 import ValidationPassword from '@/app/Tools/validationPassword';
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
+import { firebaseConfig } from '@/app/Config/firebase/credential';
+import { v4 as uuidv4 } from 'uuid';
+
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 export default function SingUp(params) {
     const [username, setUsername] = useState('');
     const [useremail, setUserEmail] = useState('');
@@ -12,6 +22,18 @@ export default function SingUp(params) {
     const [passwordconfir, setPasswordConfir] = useState('');
     const [error, setError] = useState(null)
     const [register, setRegister] = useState([])
+
+
+    // Add a new document in collection "cities"
+    async function add(params) {
+
+        await setDoc(doc(db, "userRegister", uuidv4()), {
+            name_user: username,
+            email_user: useremail,
+            password_user:  password
+        });
+    }
+
 
     function Data(username, useremail) {
 
@@ -25,7 +47,7 @@ export default function SingUp(params) {
         console.log(DataRegister);
         const regex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
         const result = regex.exec(useremail)// Nos perimite buscar una coincidencia con la cadena(regex) anterior
-        
+
         if (useremail === '' || username === '' || password === '' || passwordconfir === '') {
             alert('los campos esta vaios!!.');
             setError(alert);
@@ -38,11 +60,6 @@ export default function SingUp(params) {
             setError('Correo electronico no valido ')
             alert(error)
         }
-        /*if (password.length < 8) {
-            setError('La contraseña debe ser de almenos 8 caracteres');
-            alert(error);
-            return;
-        }*/
         if (passwordconfir != password) {
             setError('Las contraseñas no coinciden');
             alert(error);
@@ -50,12 +67,12 @@ export default function SingUp(params) {
         }
         if (register.length > 0) {
             const emailExists = register.some(element => element.useremail_f === useremail);// some() es un método de array que verifica si al menos un elemento en el array cumple con la condición proporcionada. Devuelve true si se encuentra un elemento que cumple con la condición y false en caso contrario.
-            const passwordExists = register.some(element => element.password_f=== password);
+            const passwordExists = register.some(element => element.password_f === password);
             if (emailExists) {
                 setError('Este correo electronico ya esta registrado')
                 alert(error)
                 return;
-            } 
+            }
             if (passwordExists) {
                 setError('Esta  contraseña ya esta registrada')
                 alert(error)
@@ -67,21 +84,25 @@ export default function SingUp(params) {
             }
         } else {
             setRegister(e => [...e, DataRegister])
+            alert('Te has registrado con exito!!')
         }
     }
     console.log(register);
-//---------LIMPIAMOS LOS INPUTS A TREVES DE SUS ESTADOS 
-    const CleanInputs=()=>{
+
+    //---------LIMPIAMOS LOS INPUTS A TREVES DE SUS ESTADOS 
+    const CleanInputs = () => {
         setUsername('');
         setUserEmail('');
         setPassword('');
         setPasswordConfir('');
     }
-//--------------EJECUTAMOS LA FUNSION CON LOS ARGUMENTOS ENVIADOS-------------------------
+    //--------------EJECUTAMOS LA FUNSION CON LOS ARGUMENTOS ENVIADOS-------------------------
     const Ejecut = () => {
         Data(username, useremail)
         CleanInputs();
-        ValidationPassword(password)
+        ValidationPassword(password);
+        add();
+
     }
 
     return (

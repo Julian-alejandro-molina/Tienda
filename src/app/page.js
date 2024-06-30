@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Link from "next/link";
+import { app, analytics } from './firebaseConfig';
 
 export default function Home() {
   return (
