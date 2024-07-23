@@ -7,10 +7,10 @@ import Navbar from '@/app/Componets/Navbar';
 import Carrusel from '@/app/Componets/carrusel';
 export default function SelectProduct({ className, children }) {
     return (
-        <>
+       
             <div className="container container-produt ">
                 <div className='contaniner-seeker-BsCart3'>
-                    <Image className='icon-menu' src="/images/comercio.png" alt="" width={60} height={60} />
+                    <Image className='icon-menu' src="/images/agregar-usuario.png"  alt="user" width={60} height={60} priority  />
 
                     <Seeker />
                     <BsCart3 className='icon-BsCart3' />
@@ -24,10 +24,10 @@ export default function SelectProduct({ className, children }) {
                 </div>
                 <button className='btn buy-now'>Comprar ahora</button>
                 <button className='btn Add-to-cart'>Agregar al carrito</button>
-                <Navbar className={`dashboard-produc ${className}`}></Navbar>
+                
                 {children}
             </div>
-        </>);
+        );
 
 }
 //<Image className='image-produc-select' src='/images/descarga.jpg' width={250} height={250}></Image>

@@ -1,12 +1,11 @@
 import styles from '@/app/login/Login.module.css'
-
 import Link from 'next/link';
 export default function Login() {
     return (
         <>
         <div className={styles.containerlogin}>
             <div className={styles.containerLoginLogo}>
-                <img className={styles.imgLogin} src="images/comercio.png" alt="login"></img>
+                <img className={styles.imgLogin} src="images/comercio.png" alt="login" property=''></img>
             </div>
             <div className={styles.containerLoginRegister}>
                 <Link href='/continuar-como-visitante/visitante' className={styles.linkvisitante}><p className={styles.continue}>Continuar como visitante</p></Link>

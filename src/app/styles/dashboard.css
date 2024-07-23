@@ -1,34 +1,49 @@
 .contaner-dashboard{
     width: 500px;
-    height: 844px;
-    border-radius: 1.5rem;
+    height: 750px;
+    border-top-left-radius: 1.5rem;
+    border-top-right-radius: 1.5rem;
     background-color: #E1F3FB;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; 
+     
     align-items: center;
 }
 .icon-menu{
     width: 2rem;
     height: 2rem;
-    margin-right: 2rem;
+    
+    margin-top: 1.8rem;
+}
+.user{
+  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 1.8rem;
+}
+.user-name{
+    font-size: 10px;
 }
 .contaniner-seeker-BsCart3{
  display: flex;
  flex-direction:row;
- align-items: baseline;
+ height: 4.5rem;
+ 
  
 }
+
 .icon-BsCart3{
     color: #999999;
     margin-left: 2rem;
     width: 2rem;
     height: 2rem;
+    margin-top: 2.1rem;
 }
 .container-dashborad-card{
     width: 26.1rem;
-    height: 41rem;
-    
-    background-color: #E1F3FB;
+    height: 40rem;
+    margin-top: 1.5rem;
+    background-color: #0f74a0;
     
 }

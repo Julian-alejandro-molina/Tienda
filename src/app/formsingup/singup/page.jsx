@@ -3,106 +3,115 @@ import '@/app/styles/fomrsingup.css'
 import Image from "next/image";
 import { IoIosArrowBack } from "react-icons/io";
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ValidationPassword from '@/app/Tools/validationPassword';
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, collection, getDocs } from "firebase/firestore";
 import { firebaseConfig } from '@/app/Config/firebase/credential';
 import { v4 as uuidv4 } from 'uuid';
-
+import { useContext } from 'react';
+import { DataUserContext } from '@/app/Context/nameUserContext';
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 export default function SingUp(params) {
+
+    const {name}=useContext(DataUserContext)
+    useEffect(()=>{
+        if (name.length>0) {
+            console.log(name[0].name_user);
+        }
+    },[name])
     const [username, setUsername] = useState('');
     const [useremail, setUserEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordconfir, setPasswordConfir] = useState('');
-    const [error, setError] = useState(null)
-    const [register, setRegister] = useState([])
-
+    const [error, setError] = useState(null);
+    const [data_Database, setData_Database] = useState([]);
 
     // Add a new document in collection "cities"
-    async function add(params) {
-
-        await setDoc(doc(db, "userRegister", uuidv4()), {
-            name_user: username,
-            email_user: useremail,
-            password_user:  password
-        });
+    async function getData() {
+        try {
+            const querySnapshot = await getDocs(collection(db, "userRegister"));
+            const data = querySnapshot.docs.map((doc) => doc.data());
+            setData_Database(data);
+        } catch (error) {
+            console.log(`Erro al obtener los datos de la base de datos ${error}`);
+        }
     }
 
+    useEffect(() => {
+        getData();
+    }, []);
 
-    function Data(username, useremail) {
-
-        let DataRegister = {
-            username_f: username,
-            useremail_f: useremail,
-            password_f: password,
-            passwordconfir_f: passwordconfir
+    async function set() {
+        try {
+            
+            await setDoc(doc(db, "userRegister", uuidv4()), {
+                name_user: username,
+                email_user: useremail,
+                password_user: password
+            });
+        } catch (error) {
+            console.log(`Error al enviar los datos ${error}`);
         }
+    }
 
-        console.log(DataRegister);
+    function Data(username, useremail, data_Database) {
         const regex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
-        const result = regex.exec(useremail)// Nos perimite buscar una coincidencia con la cadena(regex) anterior
+        const result = regex.exec(useremail);
 
-        if (useremail === '' || username === '' || password === '' || passwordconfir === '') {
-            alert('los campos esta vaios!!.');
-            setError(alert);
+        if (!useremail || !username || !password || !passwordconfir) {
+            setError('¡Los campos están vacíos!');
+            alert('¡Los campos están vacíos!');
             return;
         }
-        if (result) {
-            console.log(`correo electronico encontrado ${result[0]}`);
-        } else {
-            console.log('No se encontro el correo electronico');
-            setError('Correo electronico no valido ')
-            alert(error)
+
+        if (!result) {
+            setError('Correo electrónico no válido');
+            alert('Correo electrónico no válido');
+            return;
         }
-        if (passwordconfir != password) {
+
+        if (passwordconfir !== password) {
             setError('Las contraseñas no coinciden');
-            alert(error);
+            alert('Las contraseñas no coinciden');
             return;
         }
-        if (register.length > 0) {
-            const emailExists = register.some(element => element.useremail_f === useremail);// some() es un método de array que verifica si al menos un elemento en el array cumple con la condición proporcionada. Devuelve true si se encuentra un elemento que cumple con la condición y false en caso contrario.
-            const passwordExists = register.some(element => element.password_f === password);
-            if (emailExists) {
-                setError('Este correo electronico ya esta registrado')
-                alert(error)
-                return;
-            }
-            if (passwordExists) {
-                setError('Esta  contraseña ya esta registrada')
-                alert(error)
-                return;
-            }
-            else {
-
-                setRegister(e => [...e, DataRegister])//  Esta es una función que toma el estado anterior como argumento (e) y devuelve un nuevo array que contiene todos los elementos del array anterior (e) más un nuevo elemento (newData).
-            }
-        } else {
-            setRegister(e => [...e, DataRegister])
-            alert('Te has registrado con exito!!')
+        // para el primer registro siempre las variables  (emailExists/passwordExists) van a valer false
+        const emailExists = data_Database.some(element => element.email_user === useremail);
+        const passwordExists = data_Database.some(element => element.password_user === password);
+        //---------------------------------------------------------------------------------------------
+        if (emailExists) {
+            setError('Este correo electrónico ya está registrado');
+            alert('Este correo electrónico ya está registrado');
+            return;
         }
-    }
-    console.log(register);
 
-    //---------LIMPIAMOS LOS INPUTS A TREVES DE SUS ESTADOS 
+        if (passwordExists) {
+            setError('Esta contraseña ya está registrada');
+            alert('Esta contraseña ya está registrada');
+            return;
+        }
+
+        setData_Database([...data_Database, { name_user: username, email_user: useremail, password_user: password }]);
+        set();
+        alert('¡Te has registrado con éxito!');
+    }
+
     const CleanInputs = () => {
         setUsername('');
         setUserEmail('');
         setPassword('');
         setPasswordConfir('');
     }
-    //--------------EJECUTAMOS LA FUNSION CON LOS ARGUMENTOS ENVIADOS-------------------------
+
     const Ejecut = () => {
-        Data(username, useremail)
+        Data(username, useremail, data_Database);
         CleanInputs();
         ValidationPassword(password);
-        add();
-
     }
 
     return (
@@ -116,11 +125,11 @@ export default function SingUp(params) {
                         <h1 className='text-singup'>Singup</h1>
                         <p className='text-credential'>Ingresa tus crendenciales para continuar</p>
                         <form className='fomr'>
-                            <label htmlFor="" className='label-form' >Nombre de usuario</label>
+                            <label htmlFor="" className='label-form'>Nombre de usuario</label>
                             <input type="text" value={username} id="username" required onChange={e => setUsername(e.target.value)} className='inpunt-form' />
 
                             <label htmlFor="" className='label-form'>Correo</label>
-                            <input type="text" value={useremail} id="useremail" required onChange={(e) => setUserEmail(e.target.value)} className='inpunt-form' />
+                            <input type="email" value={useremail} id="useremail" required onChange={e => setUserEmail(e.target.value)} className='inpunt-form' />
 
                             <label htmlFor="" className='label-form'>Contraseña</label>
                             <input type="password" value={password} id="password" required onChange={e => setPassword(e.target.value)} className='inpunt-form' name="" />
@@ -131,8 +140,6 @@ export default function SingUp(params) {
                         </form>
                     </div>
                     <button className='btn btn-register' onClick={Ejecut}>Registrar</button>
-
-
 
                 </main>
             </div>

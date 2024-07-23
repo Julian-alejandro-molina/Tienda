@@ -6,7 +6,7 @@ import { RiUserLine } from "react-icons/ri"
 import Link from 'next/link';
 export default function Navbar({className,children}) {
     return (
-        <div className={`container-sec ${className} `}>
+        <div className='container-sec  container' >
             <section className="contariner section-navbar">
                 <main className='container container-fluid py-* px-* main-navbar '>
                     <Link href='/Dashboard-Component/Dashboard'><div className='conten-icon'><CiHome className='icon'/></div></Link>

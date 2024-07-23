@@ -36,7 +36,7 @@ export default function Shoppingcart(params) {
                         </main>
                     
                 </div>
-                <Navbar className=' navbar-cart  conten-icon-cart' />
+                
             </div>
         </>);
 }
