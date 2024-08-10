@@ -1,11 +1,16 @@
+'use client'
 import '@/app/styles/my-shopping-cart.css'
 import Navbar from '@/app/Componets/Navbar';
 import Seeker from '@/app/Componets/seeker';
 import { CiSearch } from "react-icons/ci";
 import Image from 'next/image';
 import '@/app/styles/Navbar.css'
+import { DataUserContext, } from '@/app/Context/nameUserContext';
+import { useContext } from 'react';
 
 export default function Shoppingcart(params) {
+    const {name}=useContext(DataUserContext);
+    console.log(name)
     return (
         < >
             <div className="container container-shopping-cart">

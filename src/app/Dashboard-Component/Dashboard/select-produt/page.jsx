@@ -5,7 +5,11 @@ import Seeker from '@/app/Componets/seeker';
 import { BsCart3 } from "react-icons/bs";
 import Navbar from '@/app/Componets/Navbar';
 import Carrusel from '@/app/Componets/carrusel';
+import { useContext } from 'react';
+import { DataUserContext } from '@/app/Context/nameUserContext';
 export default function SelectProduct({ className, children }) {
+    const {name}=useContext(DataUserContext);
+    console.log(name);
     return (
        
             <div className="container container-produt ">
