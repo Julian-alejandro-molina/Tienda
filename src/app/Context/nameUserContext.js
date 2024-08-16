@@ -12,6 +12,8 @@ export const DataUserContext = createContext();
 export const DataUserContextProvider = ({ children }) => {
     const [name, setName] = useState('');
     const [infousernaem, setInfoUsername] = useState([]);
+    const [visitor, setVisitor] = useState();
+
 
     useEffect(() => {
         async function getData() {
@@ -34,7 +36,9 @@ export const DataUserContextProvider = ({ children }) => {
         infousernaem,
         setInfoUsername,
         name,
-        setName
+        setName,
+        visitor,
+        setVisitor
     };
 
     return (

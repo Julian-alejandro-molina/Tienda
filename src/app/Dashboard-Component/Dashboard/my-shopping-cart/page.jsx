@@ -1,7 +1,5 @@
 'use client'
 import '@/app/styles/my-shopping-cart.css'
-import Navbar from '@/app/Componets/Navbar';
-import Seeker from '@/app/Componets/seeker';
 import { CiSearch } from "react-icons/ci";
 import Image from 'next/image';
 import '@/app/styles/Navbar.css'
@@ -11,6 +9,8 @@ import { useContext } from 'react';
 export default function Shoppingcart(params) {
     const {name}=useContext(DataUserContext);
     console.log(name)
+    
+    
     return (
         < >
             <div className="container container-shopping-cart">
@@ -26,7 +26,7 @@ export default function Shoppingcart(params) {
                    
                         <main className='cardmyproduct'>
                             <div className='image-product'>
-                                <div className='img'><Image src="/images/descarga.jpg" alt="product" width={100} height={100} /></div>
+                                <div className='img'><Image src="/images/descarga.jpg" alt="product" width={100} height={100}  priority  /></div>
                             </div>
                             <div className='info-product'>
                                 <p className='product-name'>Apple iPhone 14 (128 GB) - Azul</p>
