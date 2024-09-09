@@ -9,21 +9,33 @@ import { DataUserContext } from '@/app/Context/nameUserContext';
 import useLocalStorage from '@/app/Tools/uselocalstorage';
 import { ApiDataContext, ApiDataProvider } from '@/app/Context/apiContext';
 import ProductItem from '@/app/Componets/ProductItem';
-import { element } from 'prop-types';
+import { array, element } from 'prop-types';
+
 
 
 
 export default function Dashboard() {
 
-    const { products } = useContext(ApiDataContext) || {};
-   if (products&& products.length>0) {
-    console.log(products);
-    
-   }
-   
-      
-
     const { name, visitor, setVisitor } = useContext(DataUserContext) || {};
+    const { products } = useContext(ApiDataContext) || {};
+    useEffect(() => {
+        if (products && products.length > 0) {
+            // console.log(products);
+
+            products.forEach(element => {
+                console.log(element);
+
+            });
+
+
+
+        }
+
+
+    }, [products])
+
+
+
 
 
     // Estado para controlar si la aplicación ya ha sido hidratada
@@ -48,20 +60,35 @@ export default function Dashboard() {
     }
 
     return (
-        <ApiDataProvider>
-            <div className="container contaner-dashboard">
-                <div className='contaniner-seeker-BsCart3'>
-                    <div className='user'>
-                        <Image className='icon-menu' src="/images/agregar-usuario.png" alt="" width={60} height={60} priority />
-                        <p className='user-name'>Hola {storedName} !!</p> {/* Mostrar el valor de `storedName` */}
-                    </div>
-                    <Seeker />
-                    <BsCart3 className='icon-BsCart3' />
+
+        <div className="container contaner-dashboard">
+            <div className='contaniner-seeker-BsCart3'>
+                <div className='user'>
+                    <Image className='icon-menu' src="/images/agregar-usuario.png" alt="" width={60} height={60} priority />
+                    <p className='user-name'>Hola {storedName} !!</p> {/* Mostrar el valor de `storedName` */}
                 </div>
-                <div className='container container-dashborad-card'>
-                    
-                </div>
+                <Seeker />
+                <BsCart3 className='icon-BsCart3' />
             </div>
-        </ApiDataProvider>
+            <div className=' container-dashborad-card'>
+                {
+                    products.map(element =>
+                        <ProductItem
+                            key={element.id}
+                            title={element.title}
+                            description={element.description}
+                            images={element.images}
+                            price={element.price}
+                            category={element.category}
+                            brand={element.brand}
+
+                        >
+                        </ProductItem>
+                    )
+                }
+            </div>
+        </div>
+
+
     );
 }
