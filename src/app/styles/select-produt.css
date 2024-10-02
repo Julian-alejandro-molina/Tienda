@@ -2,8 +2,9 @@
 
 .container-produt{
     width: 500px;
-    height: 844px;
-    border-radius: 1.5rem;
+    height: 750px;
+    border-top-left-radius: 1.5rem;
+    border-top-right-radius: 1.5rem;
     background-color: #E1F3FB;
     display: flex;
     flex-direction: column;
@@ -109,4 +110,16 @@
 }
 .dashboard-produc{
    margin-top: 2.5rem;   
+}
+.user-names{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 1.8rem;
+
+}
+.user-names-p{
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 10px;
 }

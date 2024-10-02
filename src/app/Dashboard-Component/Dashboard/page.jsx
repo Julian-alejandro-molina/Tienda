@@ -12,31 +12,26 @@ import ProductItem from '@/app/Componets/ProductItem';
 import { array, element } from 'prop-types';
 
 
-
-
 export default function Dashboard() {
 
     const { name, visitor, setVisitor } = useContext(DataUserContext) || {};
     const { products } = useContext(ApiDataContext) || {};
+    const { dataCardProduc } = useContext(ApiDataContext) || {}
+    const [productoEscagido, setProductoEscagido] = useState();
+
+    //console.log('dasdasda', dataCardProduc);
+
+
     useEffect(() => {
         if (products && products.length > 0) {
             // console.log(products);
 
             products.forEach(element => {
-                console.log(element);
+                //console.log(element);
 
             });
-
-
-
         }
-
-
     }, [products])
-
-
-
-
 
     // Estado para controlar si la aplicación ya ha sido hidratada
     const [hydrated, setHydrated] = useState(false);
@@ -59,36 +54,61 @@ export default function Dashboard() {
         return null;
     }
 
-    return (
+    //Renderizamos de pendiendo de
+    const productoencontrado = JSON.parse(localStorage.getItem('productoencontrado'));
+    const renderizar = productoencontrado
+    ? productoencontrado.map(element => ( // Asumiendo que productoencontrado es un array
+        <div key={element.id} className='cotainer-card-dashboard-'>
+            <main className='container-img-listDashboard'>
+                <img className='img-list-cardDashboard' src={element.images[0]} alt={element.title} />
+            </main>
+            <ul className='info-product'>
+                <li className='product-name'>{element.title}</li>
+                <li className='color'>{element.category}</li>
+                <li className='price'>${element.price}</li>
+                <li className='brand'>{element.brand}</li>
+            </ul>
+            <div className='contador-'>
+                <button className='less'>-</button>
+                <button className='amount'>1</button>
+                <button className='further'>+</button>
+            </div>
+        </div>
+    ))
+    : products.map(element => (
+        <ProductItem
+            key={element.id}
+            title={element.title}
+            description={element.description}
+            images={element.images}
+            price={element.price}
+            category={element.category}
+            brand={element.brand}
+            id={element.id}
+        />
+    ));
 
+    return (
         <div className="container contaner-dashboard">
             <div className='contaniner-seeker-BsCart3'>
                 <div className='user'>
-                    <Image className='icon-menu' src="/images/agregar-usuario.png" alt="" width={60} height={60} priority />
+                    <Image
+                        className='icon-menu'
+                        src="/images/agregar-usuario.png"
+                        alt="icono usuario"
+                        width={60}
+                        height={60}
+                        priority
+                    />
                     <p className='user-name'>Hola {storedName} !!</p> {/* Mostrar el valor de `storedName` */}
                 </div>
                 <Seeker />
                 <BsCart3 className='icon-BsCart3' />
             </div>
-            <div className=' container-dashborad-card'>
-                {
-                    products.map(element =>
-                        <ProductItem
-                            key={element.id}
-                            title={element.title}
-                            description={element.description}
-                            images={element.images}
-                            price={element.price}
-                            category={element.category}
-                            brand={element.brand}
 
-                        >
-                        </ProductItem>
-                    )
-                }
+            <div className='container-dashborad-card'>
+                {renderizar}
             </div>
         </div>
-
-
     );
 }

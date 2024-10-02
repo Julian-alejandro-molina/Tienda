@@ -5,6 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 import { DataUserContextProvider } from "./Context/nameUserContext";
+import { ApiDataProvider } from "./Context/apiContext";
+
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -17,12 +19,15 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <DataUserContextProvider >
+     <ApiDataProvider>
       <html lang="en">
         <body className={inter.className}>
           {children}
           
         </body>
       </html>
+      </ApiDataProvider> 
     </DataUserContextProvider>
+    
   );
 }
