@@ -9,7 +9,7 @@ export const ApiDataContext = createContext();
 export const ApiDataProvider = ({ children }) => {
     const [products, setProducts] = useState([]);
     const [searchproduct, setSearchproduct] = useState();
-    const [producttosearch, setProducttosearch] = useState();
+    
 
     const fetchProducts = () => {
         fetch('https://dummyjson.com/products')
@@ -30,9 +30,7 @@ export const ApiDataProvider = ({ children }) => {
         setProducts,
         searchproduct,
         setSearchproduct,
-        producttosearch, 
-        setProducttosearch
-
+       
     }
 
     return (
