@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Seeker from '@/app/Componets/seeker';
 import { BsCart3 } from "react-icons/bs";
 import Carrusel from '@/app/Componets/carrusel';
+import { DataUserContext } from '@/app/Context/nameUserContext';
 import { useContext, useEffect, useState } from 'react';
 
 
@@ -11,9 +12,11 @@ import { useContext, useEffect, useState } from 'react';
 
 
 export default function SelectProduct() {
-
+    const { priceamount } = useContext(DataUserContext);
     const [dataProduc, setDataProduc] = useState();
     const [name, setName] = useState();
+    //console.log(priceamount);
+
     useEffect(() => {
 
         if (typeof window !== 'undefined') {
@@ -46,6 +49,11 @@ export default function SelectProduct() {
 
     }, [])
 
+    const storedValue = (localStorage.getItem('valuePrice'));
+    const value=storedValue === "undefined" || storedValue === null ? undefined : JSON.parse(storedValue) || dataProduc?.price
+    
+   
+
 
 
 
@@ -60,11 +68,11 @@ export default function SelectProduct() {
                 <Seeker />
                 <BsCart3 className='icon-BsCart3' />
             </div>
-            
+
             <div className='container-info-product'>
                 <h1 className='neme-product'>{dataProduc?.title}</h1>
                 <Carrusel />
-                <p className='pricee'>{dataProduc?.price}</p>
+                <p className='pricee'>{value?? dataProduc?.price}</p>
                 <p className='send'>Envio gratis</p>
                 <p className='stock-product'>Stock disponibles</p>
             </div>

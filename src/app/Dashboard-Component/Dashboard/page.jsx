@@ -7,9 +7,10 @@ import Image from 'next/image';
 import { useContext, useEffect, useState } from 'react';
 import { DataUserContext } from '@/app/Context/nameUserContext';
 import useLocalStorage from '@/app/Tools/uselocalstorage';
-import { ApiDataContext, ApiDataProvider } from '@/app/Context/apiContext';
+import { ApiDataContext,  } from '@/app/Context/apiContext';
 import ProductItem from '@/app/Componets/ProductItem';
-import { array, element } from 'prop-types';
+import { IoIosCloseCircleOutline } from "react-icons/io";
+
 
 
 export default function Dashboard() {
@@ -20,8 +21,18 @@ export default function Dashboard() {
     const [productoEscagido, setProductoEscagido] = useState();
 
     //console.log('dasdasda', dataCardProduc);
+    useEffect(() => {
+        const data = JSON.parse(localStorage.getItem('productoencontrado'));
+        if (data) {
+            setProductoEscagido(data);
+        }
+    }, []);
 
+    const Ejecutar=()=>{
+        localStorage.removeItem('productoencontrado');
+        setProductoEscagido([]); // De esta manera se actualiza el estado co un valor vacio  
 
+    }
     useEffect(() => {
         if (products && products.length > 0) {
             // console.log(products);
@@ -55,9 +66,9 @@ export default function Dashboard() {
     }
 
     //Renderizamos de pendiendo de
-    const productoencontrado = JSON.parse(localStorage.getItem('productoencontrado'));
-    const renderizar = productoencontrado
-    ? productoencontrado.map(element => ( // Asumiendo que productoencontrado es un array
+    //const productoencontrado = JSON.parse(localStorage.getItem('productoencontrado'));
+    const renderizar = productoEscagido && productoEscagido.length>0
+    ? productoEscagido.map(element => ( // Asumiendo que productoencontrado es un array
         <div key={element.id} className='cotainer-card-dashboard-'>
             <main className='container-img-listDashboard'>
                 <img className='img-list-cardDashboard' src={element.images[0]} alt={element.title} />
@@ -69,7 +80,8 @@ export default function Dashboard() {
                 <li className='brand'>{element.brand}</li>
             </ul>
             <div className='contador-'>
-                <button className='less'>-</button>
+            <IoIosCloseCircleOutline className='closer' onClick={Ejecutar} />
+                <button className='less-dashboard'>-</button>
                 <button className='amount'>1</button>
                 <button className='further'>+</button>
             </div>

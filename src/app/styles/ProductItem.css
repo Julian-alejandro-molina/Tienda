@@ -21,6 +21,7 @@
     height: 140px;
     background-color: rgb(255, 255, 255);
     cursor: pointer;
+    padding-left: 0.5rem;
     
 }
 
@@ -44,6 +45,7 @@ height: 140px;
 }
 
 .less {
+    
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
     border: 0;
@@ -79,11 +81,12 @@ height: 140px;
     color: rgb(76, 171, 255);
 }
 .product-name{
+    margin-top: 0.5rem;
     color:  #515557;;
     font-family: "Roboto", sans-serif;
     font-weight: 800;
     font-style: normal;
-    font-size: 15px;
+    font-size: 13px;
     text-transform: uppercase;
 }
 .color{
@@ -110,3 +113,25 @@ height: 140px;
 ul {
     list-style-type: none;
   }
+.container-quantity{
+    display: flex;
+    flex-direction: row;
+}
+.quantity{
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 15px;
+}
+.amount{
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 15px;
+}
+.unidad{
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 15px;
+}

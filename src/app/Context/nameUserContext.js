@@ -13,6 +13,7 @@ export const DataUserContextProvider = ({ children }) => {
     const [name, setName] = useState('');
     const [infousernaem, setInfoUsername] = useState([]);
     const [visitor, setVisitor] = useState();
+    const [priceamount, setpriceamount]=useState();
 
 
     useEffect(() => {
@@ -38,7 +39,10 @@ export const DataUserContextProvider = ({ children }) => {
         name,
         setName,
         visitor,
-        setVisitor
+        setVisitor,
+        priceamount, 
+        setpriceamount
+        
     };
 
     return (
