@@ -6,8 +6,15 @@ import { BsCart3 } from "react-icons/bs";
 import Carrusel from '@/app/Componets/carrusel';
 import { DataUserContext } from '@/app/Context/nameUserContext';
 import { useContext, useEffect, useState } from 'react';
+import { firebaseConfig } from '@/app/Config/firebase/credential';
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { doc, collection, setDoc } from "firebase/firestore";
+import { v4 as uuidv4 } from 'uuid';
+import { getDocss } from '@/app/Utilidades/toolsFirebase'
 
-
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app)
 
 
 
@@ -15,10 +22,13 @@ export default function SelectProduct() {
     const { priceamount } = useContext(DataUserContext);
     const [dataProduc, setDataProduc] = useState();
     const [name, setName] = useState();
+    const [message, setMessage] = useState(false);
+    const [amountt,setAmount]= useState(localStorage.getItem('valuecont'));
+
     //console.log(priceamount);
 
     useEffect(() => {
-
+       
         if (typeof window !== 'undefined') {
 
             const names = localStorage.getItem('name')
@@ -49,10 +59,65 @@ export default function SelectProduct() {
 
     }, [])
 
-    const storedValue = (localStorage.getItem('valuePrice'));
-    const value=storedValue === "undefined" || storedValue === null ? undefined : JSON.parse(storedValue) || dataProduc?.price
     
-   
+    const storedValue = (localStorage.getItem('valuePrice'));
+    const value = storedValue === "undefined" || storedValue === null ? undefined : JSON.parse(storedValue) || dataProduc?.price
+
+
+    // ENVIAR DATOS A LA BASE DE DATOS 
+    async function createRecord(params) {
+        try {
+            await setDoc(doc(db, "shoppingCart", uuidv4()), {
+                name: dataProduc?.title,
+                price: storedValue,
+                categoria: dataProduc?.category,
+                brand: dataProduc?.brand,
+                imagen: dataProduc?.images,
+
+            });
+            console.log('El registro se guardo con exito');
+            setMessage(true);
+
+        } catch (error) {
+            console.error('No se pudo crear el registro');
+
+        }
+
+
+    }
+    //ELIMINAR DOCUMENTOS DE LA BASE DE DATOS 
+    async function deleteDOC(params) {
+        try {
+            const docRef = await addDoc(collection(db, "shoppingCart"), {
+                name: dataProduc?.title,
+                price: storedValue,
+                categoria: dataProduc?.category,
+                brand: dataProduc?.brand,
+                imagen: dataProduc?.images,
+
+
+            });
+            console.log("Documento escrito con ID: ", docRef.id);
+            setMessage(true);
+
+        } catch (error) {
+            console.error('No se pudo crear el registro');
+
+        }
+
+
+    }
+
+
+    const seeMessage = () => {
+        setMessage(!message)
+    }
+    const mostrar = message ? <main className='alert'>
+        <Image className='img-comprobado' src="/images/comprobado.png" width={60} height={60} alt="img-exito" priority />
+        Tu producto se agregó con éxito
+        <button className='button-aceptar' onClick={seeMessage}>ok</button>
+    </main> : "";
+
 
 
 
@@ -70,14 +135,22 @@ export default function SelectProduct() {
             </div>
 
             <div className='container-info-product'>
-                <h1 className='neme-product'>{dataProduc?.title}</h1>
-                <Carrusel />
-                <p className='pricee'>{value?? dataProduc?.price}</p>
-                <p className='send'>Envio gratis</p>
-                <p className='stock-product'>Stock disponibles</p>
+                <div className='container-name'>
+                    <h1 className='neme-product'>{dataProduc?.title}</h1>
+                </div>
+                <div className='carrusel-container'>
+                    <Carrusel />
+                </div>
+                <ul className='list-info-prudut'>
+                    <li className='pricee'>$: {value ?? dataProduc?.price}</li>
+                    <li className='send'>Envio gratis</li>
+                    <li className='stock-product'>Stock disponibles</li>
+                    <li className='Catidad-produc'>Cantidad : {amountt}</li>
+                </ul>
             </div>
             <button className='btn buy-now'>Comprar ahora</button>
-            <button className='btn Add-to-cart'>Agregar al carrito</button>
+            <button className='btn Add-to-cart' onClick={createRecord} >Agregar al carrito</button>
+            {mostrar}
 
         </div>
 

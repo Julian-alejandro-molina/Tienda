@@ -7,18 +7,38 @@ import Image from 'next/image';
 import { useContext, useEffect, useState } from 'react';
 import { DataUserContext } from '@/app/Context/nameUserContext';
 import useLocalStorage from '@/app/Tools/uselocalstorage';
-import { ApiDataContext,  } from '@/app/Context/apiContext';
+import { ApiDataContext, } from '@/app/Context/apiContext';
 import ProductItem from '@/app/Componets/ProductItem';
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import { element } from 'prop-types';
 
 
 
 export default function Dashboard() {
 
     const { name, visitor, setVisitor } = useContext(DataUserContext) || {};
-    const { products } = useContext(ApiDataContext) || {};
+    const { products, searchproduct,setSearchproduct } = useContext(ApiDataContext) || {};
     const { dataCardProduc } = useContext(ApiDataContext) || {}
     const [productoEscagido, setProductoEscagido] = useState();
+
+    /*--------------FILTRADO DE PRODUCTO-------------------- */
+    // Verificamos si searchproduct tiene datos antes de aplicar el filter
+    useEffect(() => {
+        // Filtrar productos en base a `searchproduct`
+        if (searchproduct) {
+            const filtered = products?.filter(product =>
+                product.title.toLowerCase().includes(searchproduct.toLowerCase())
+            );
+            setProductoEscagido(filtered || []);
+        } 
+    }, [searchproduct, products])
+
+
+
+
+
+
+    // Función para ejecutar el filtrado y almacenamiento
 
     //console.log('dasdasda', dataCardProduc);
     useEffect(() => {
@@ -28,7 +48,7 @@ export default function Dashboard() {
         }
     }, []);
 
-    const Ejecutar=()=>{
+    const Ejecutar = () => {
         localStorage.removeItem('productoencontrado');
         setProductoEscagido([]); // De esta manera se actualiza el estado co un valor vacio  
 
@@ -67,38 +87,38 @@ export default function Dashboard() {
 
     //Renderizamos de pendiendo de
     //const productoencontrado = JSON.parse(localStorage.getItem('productoencontrado'));
-    const renderizar = productoEscagido && productoEscagido.length>0
-    ? productoEscagido.map(element => ( // Asumiendo que productoencontrado es un array
-        <div key={element.id} className='cotainer-card-dashboard-'>
-            <main className='container-img-listDashboard'>
-                <img className='img-list-cardDashboard' src={element.images[0]} alt={element.title} />
-            </main>
-            <ul className='info-product'>
-                <li className='product-name'>{element.title}</li>
-                <li className='color'>{element.category}</li>
-                <li className='price'>${element.price}</li>
-                <li className='brand'>{element.brand}</li>
-            </ul>
-            <div className='contador-'>
-            <IoIosCloseCircleOutline className='closer' onClick={Ejecutar} />
-                <button className='less-dashboard'>-</button>
-                <button className='amount'>1</button>
-                <button className='further'>+</button>
+    const renderizar = productoEscagido && productoEscagido.length > 0
+        ? productoEscagido.map(element => ( // Asumiendo que productoencontrado es un array
+            <div key={element.id} className='cotainer-card-dashboard-'>
+                <main className='container-img-listDashboard'>
+                    <img className='img-list-cardDashboard' src={element.images[0]} alt={element.title} />
+                </main>
+                <ul className='info-product'>
+                    <li className='product-name'>{element.title}</li>
+                    <li className='color'>{element.category}</li>
+                    <li className='price'>${element.price}</li>
+                    <li className='brand'>{element.brand}</li>
+                </ul>
+                <div className='contador-'>
+                    <IoIosCloseCircleOutline className='closer' onClick={Ejecutar} />
+                    <button className='less-dashboard'>-</button>
+                    <button className='amount'>1</button>
+                    <button className='further'>+</button>
+                </div>
             </div>
-        </div>
-    ))
-    : products.map(element => (
-        <ProductItem
-            key={element.id}
-            title={element.title}
-            description={element.description}
-            images={element.images}
-            price={element.price}
-            category={element.category}
-            brand={element.brand}
-            id={element.id}
-        />
-    ));
+        ))
+        : products.map(element => (
+            <ProductItem
+                key={element.id}
+                title={element.title}
+                description={element.description}
+                images={element.images}
+                price={element.price}
+                category={element.category}
+                brand={element.brand}
+                id={element.id}
+            />
+        ));
 
     return (
         <div className="container contaner-dashboard">
