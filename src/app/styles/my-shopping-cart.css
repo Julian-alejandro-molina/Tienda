@@ -61,7 +61,7 @@
     border-radius: 0.8rem;
     background-color: #ffffff;
     width: 27.4rem;
-    height: 7rem;
+    height: 8rem;
     margin-top: 1rem;
     display: flex;
     flex-direction: row;
@@ -158,6 +158,13 @@
     font-weight: 400;
     font-style: normal;
     list-style: none;
+}
+.Product-quantity{
+   
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    list-style: none; 
 }
 
 .searche-dashboard {}

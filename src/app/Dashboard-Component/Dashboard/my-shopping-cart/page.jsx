@@ -9,7 +9,9 @@ import { getFirestore } from "firebase/firestore";
 import { doc, collection, getDocs } from "firebase/firestore";
 import { v4 as uuidv4 } from 'uuid';
 import { deleteProductFromCart } from '@/app/Utilidades/toolsFirebase';
-import { element } from 'prop-types';
+import { useRouter } from 'next/navigation';
+
+
 
 
 
@@ -20,8 +22,17 @@ export default function Shoppingcart(params) {
 
     let coletion = "shoppingCart"
     const [docs, setDocs] = useState([]);
+    const router =useRouter()
 
+    
+    
+    // ------Effect----------------- 
+    useEffect(() => {
+        getDocuments();
+        console.log(docs);
+    }, [])
 
+    // ------Funtions-------
 
     const getDocuments = async (params) => {
         try {
@@ -41,12 +52,6 @@ export default function Shoppingcart(params) {
     }
 
 
-
-    useEffect(() => {
-        getDocuments();
-        console.log(docs);
-    }, [])
-
     docs.map(element => element)
 
     const rederDocs = docs && docs.length > 0 ? docs.map(element => (
@@ -58,18 +63,20 @@ export default function Shoppingcart(params) {
                 <li className='product-name-cart'>{element.name}</li>
                 <li className='color-cart'>{element.categoria}</li>
                 <li className='price-cart'>{element.price}</li>
+                <li className='Product-quantity'>Catidad: {element.cantidad}</li>
 
             </ul>
             <div className='shopping'>
 
                 <button className='delete' onClick={() => {
                     deleteProductFromCart(coletion, element.id),
-                        setDocs(() => docs.filter(item => item.id !==element.id))// Utilizar !== simpre que se comparen objetos 
-                                                                                  // y === simpre que se comparen valores primitivos 
+                        setDocs(() => docs.filter(item => item.id !== element.id))// Utilizar !== simpre que se comparen objetos 
+                    // y === simpre que se comparen valores primitivos 
                 }}>
                     <RiDeleteBin6Line className='RiDeleteBin6Line' />
                 </button>
-                <button className='comprar'>Comprar</button>
+                <button className='comprar' onClick={()=>{router.push('/Dashboard-Component/formshopee')}}>Comprar</button>
+               
 
             </div>
         </main>)) : <p className='carritoVacio'>Carrito vacio</p>;

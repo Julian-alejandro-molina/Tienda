@@ -73,6 +73,7 @@ export default function SelectProduct() {
                 categoria: dataProduc?.category,
                 brand: dataProduc?.brand,
                 imagen: dataProduc?.images,
+                cantidad: dataProduc?.contador
 
             });
             console.log('El registro se guardo con exito');

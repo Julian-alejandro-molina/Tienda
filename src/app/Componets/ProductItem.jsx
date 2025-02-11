@@ -9,24 +9,34 @@ export default function ProductItem({ price, title, description, images, categor
     const [ValorTotal, setValorTotal] = useState(price);
     const router = useRouter();
 
-    const handleClick = () => {
-        const selectedProduct = { id, price, title, description, images, category, brand };
-        if (ValorTotal>price&& contador>1) {
-
-            try {
-                localStorage.setItem('myProduct', JSON.stringify(selectedProduct));
-                console.log('Datos guardados en el local storage.');
-            } catch (error) {
-                console.error('No se guardaron los datos.', error);
-            }
-            router.push('/Dashboard-Component/Dashboard/select-produt');
-        }else{
+    //Funsion para enviar datos al localstorage con la informacion de la catidad y precio del producto  
+     const handleClick = () => {
+        const selectedProduct = { id, price, title, description, images, category, brand,contador };
+    
+        // Validación  de las variables
+        if (typeof ValorTotal === 'undefined' || typeof contador === 'undefined') {
+            console.error('ValorTotal o contador no están definidos.');
+            return;
+        }
+    
+        
+        if (ValorTotal <= price || contador <= 1) {
             localStorage.setItem('valuePrice', JSON.stringify(ValorTotal));
             localStorage.setItem('valuecont', JSON.stringify(contador));
+        }
+    
+        // Guardar el producto seleccionado y redirigir
+        try {
+            localStorage.setItem('myProduct', JSON.stringify(selectedProduct));
+            console.log('Datos guardados en el local storage.');
             router.push('/Dashboard-Component/Dashboard/select-produt');
+        } catch (error) {
+            console.error('No se guardaron los datos.', error);
+           
         }
     };
-
+    
+//ATUALIZAMOS EL VALOR DEPENDIENDO DE LA CANTIDAD 
     const actualizarCantidad = (tipoOperacion) => {
         const nuevoContador = tipoOperacion === 'sumar' ? contador + 1 : Math.max(contador - 1, 1);
         const nuevoValorTotal = nuevoContador * price;
@@ -41,6 +51,7 @@ export default function ProductItem({ price, title, description, images, categor
     useEffect(() => {
         setpriceamount(ValorTotal);
     }, [ValorTotal, setpriceamount]);
+    
 
     return (
         <div className='cotainer-card-dashboard-'>

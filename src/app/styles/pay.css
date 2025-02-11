@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Carter+One&family=Fjalla+One&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Fjalla+One&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bowlby+One+SC&family=Carter+One&family=Fjalla+One&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+.content-form {
+    display: flex;
+    flex-direction: column;
+    
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 20px;
+    width: 30rem;
+    border-radius: 2rem;
+
+}
+.title{
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 20px;
+}
+.buttCompra{
+   border: none;
+   border-radius: 0.5rem;
+   background-color: rgb(176, 250, 225);
+   color: rgb(21, 83, 63);
+   
+}
+input{
+    outline-style: none;
+}
+.closer{
+    margin-left: 25rem;
+    cursor: pointer;
+    color: rgb(248, 143, 5);
+    
+}
+.closer:hover{
+    color: rgb(255, 92, 92);
+}
