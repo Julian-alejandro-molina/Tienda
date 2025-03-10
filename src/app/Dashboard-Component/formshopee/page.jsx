@@ -1,70 +1,99 @@
-'use client'
+"use client";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import { useState } from "react";
-import '@/app/styles/pay.css'
-import { Router } from "react-router-dom";
 import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import "@/app/styles/pay.css";
 
-export default function pay() {
-  const router =useRouter()
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    address: "",
-    city: "",
-    zip: "",
-    card: "",
-    expiry: "",
-    cvv: "",
+export default function Pay() {
+  const router = useRouter();
+
+  //  Esquema de validaciones con Yup
+  const validationSchema = yup.object().shape({
+    name: yup.string().required("El nombre es obligatorio"),
+    email: yup.string().email("Correo inválido").required("El correo es obligatorio"),
+    address: yup.string().required("La dirección es obligatoria"),
+    city: yup.string().required("La ciudad es obligatoria"),
+    zip: yup
+      .string()
+      .matches(/^\d{5,10}$/, "Número de cuenta inválido")
+      .required("El número de cuenta es obligatorio"),
+    card: yup.string().required("El banco es obligatorio"),
+    expiry: yup.string().required("La fecha de expiración es obligatoria"),
+    cvv: yup
+      .string()
+      .matches(/^\d{3,4}$/, "CVV inválido")
+      .required("El CVV es obligatorio"),
   });
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm({
+    resolver: yupResolver(validationSchema),
+    mode: "onTouched", // Validar solo cuando se toque el campo
+  });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Datos enviados:", formData);
+  //  Función para manejar el envío del formulario
+  const onSubmit = (data) => {
+    console.log("Datos enviados:", data);
+    localStorage.setItem("DatosFactura", JSON.stringify(data));
+    router.push("/Dashboard-Component/proofOfPayment");
   };
-
-const closer=()=>{
-  router.push('/Dashboard-Component/Dashboard/my-shopping-cart')
-  console.log(formData);
-  
-}
 
   return (
-    <form onSubmit={handleSubmit} className="content-form max-w-md mx-auto p-4 border rounded-lg shadow-md">
-      <IoIosCloseCircleOutline className="closer" onClick={ closer} />
+    <form onSubmit={handleSubmit(onSubmit)} className="content-form max-w-md mx-auto p-4 border rounded-lg shadow-md">
+      <IoIosCloseCircleOutline className="closer" onClick={() => router.push("/Dashboard-Component/Dashboard/my-shopping-cart")} />
       <h2 className="title text-xl font-bold mb-4">Información de Compra</h2>
 
+
       <label className="block mb-2">Nombre Completo</label>
-      <input type="text" name="name" onChange={handleChange} required className=" input w-full p-0 border rounded-md mb-3" />
+      <input type="text" {...register("name")} className="input w-full p-2 border rounded-md mb-1" />
+      <p className="text-red-500 text-sm">{errors.name?.message}</p>
+
 
       <label className="block mb-2">Correo Electrónico</label>
-      <input type="email" name="email" onChange={handleChange} required className="w-full p-0 border rounded-md mb-3" />
+      <input type="email" {...register("email")} className="w-full p-2 border rounded-md mb-1" />
+      <p className="text-red-500 text-sm">{errors.email?.message}</p>
 
-      <h3 className=" title text-lg font-semibold mt-4">Dirección de Envío</h3>
+      <h3 className="title text-lg font-semibold mt-4">Dirección de Envío</h3>
+
+
       <label className="block mb-2">Dirección</label>
-      <input type="text" name="address" onChange={handleChange} required className="w-full p-0 border rounded-md mb-3" />
+      <input type="text" {...register("address")} className="w-full p-2 border rounded-md mb-1" />
+      <p className="text-red-500 text-sm">{errors.address?.message}</p>
+
 
       <label className="block mb-2">Ciudad</label>
-      <input type="text" name="city" onChange={handleChange} required className="w-full p-0 border rounded-md mb-3" />
+      <input type="text" {...register("city")} className="w-full p-2 border rounded-md mb-1" />
+      <p className="text-red-500 text-sm">{errors.city?.message}</p>
 
-      <label className="block mb-2">Código Postal</label>
-      <input type="text" name="zip" onChange={handleChange} required className="w-full p-0 border rounded-md mb-3" />
 
-      <h3 className=" title text-lg font-semibold mt-4">Método de Pago</h3>
-      <label className="block mb-2">Número de Tarjeta</label>
-      <input type="text" name="card" onChange={handleChange} required className="w-full p-0 border rounded-md mb-3" />
+      <label className="block mb-2">Número de cuenta</label>
+      <input type="text" {...register("zip")} className="w-full p-2 border rounded-md mb-1" />
+      <p className="text-red-500 text-sm">{errors.zip?.message}</p>
+
+      <h3 className="title text-lg font-semibold mt-4">Método de Pago</h3>
+
+
+      <label className="block mb-2">Banco</label>
+      <input type="text" {...register("card")} className="w-full p-2 border rounded-md mb-1" />
+      <p className="text-red-500 text-sm">{errors.card?.message}</p>
+
 
       <label className="block mb-2">Fecha de Expiración</label>
-      <input type="month" name="expiry" onChange={handleChange} required className="w-full p-0 border rounded-md mb-3" />
+      <input type="month" {...register("expiry")} className="w-full p-2 border rounded-md mb-1" />
+      <p className="text-red-500 text-sm">{errors.expiry?.message}</p>
+
 
       <label className="block mb-2">CVV</label>
-      <input type="text" name="cvv" onChange={handleChange} required className="w-full p-0 border rounded-md mb-3" />
+      <input type="text" {...register("cvv")} className="w-full p-2 border rounded-md mb-1" />
+      <p className="text-red-500 text-sm">{errors.cvv?.message}</p>
 
-      <button type="submit" className=" buttCompra ">
+
+      <button type="submit" className={`buttCompra btn ${!isValid ? "opacity-50 cursor-not-allowed" : ""}`} disabled={!isValid}>
         Finalizar Compra
       </button>
     </form>

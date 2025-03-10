@@ -50,6 +50,7 @@ export default function Shoppingcart(params) {
 
         }
     }
+    
 
 
     docs.map(element => element)
@@ -75,7 +76,7 @@ export default function Shoppingcart(params) {
                 }}>
                     <RiDeleteBin6Line className='RiDeleteBin6Line' />
                 </button>
-                <button className='comprar' onClick={()=>{router.push('/Dashboard-Component/formshopee')}}>Comprar</button>
+                <button className='comprar' onClick={()=>{router.push('/Dashboard-Component/formshopee'); localStorage.setItem('priceFacture',JSON.stringify(element.price));}}>Comprar</button>
                
 
             </div>

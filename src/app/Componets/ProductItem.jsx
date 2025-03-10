@@ -2,6 +2,8 @@ import '@/app/styles/ProductItem.css';
 import { DataUserContext } from '../Context/nameUserContext';
 import { useState, useContext, useEffect } from "react";
 import { useRouter } from 'next/navigation';
+import { actualizarCantidad } from '../Utilidades/funtions';
+
 
 export default function ProductItem({ price, title, description, images, category, brand, id }) {
     const { priceamount, setpriceamount } = useContext(DataUserContext);
@@ -37,16 +39,16 @@ export default function ProductItem({ price, title, description, images, categor
     };
     
 //ATUALIZAMOS EL VALOR DEPENDIENDO DE LA CANTIDAD 
-    const actualizarCantidad = (tipoOperacion) => {
-        const nuevoContador = tipoOperacion === 'sumar' ? contador + 1 : Math.max(contador - 1, 1);
-        const nuevoValorTotal = nuevoContador * price;
+const handleActualizarCantidad = (tipoOperacion) => {
+    const { nuevoContador, nuevoValorTotal } = actualizarCantidad(contador, price, tipoOperacion);
 
-        setContador(nuevoContador);
-        setValorTotal(nuevoValorTotal);
+    setContador(nuevoContador);
+    setValorTotal(nuevoValorTotal);
 
-        localStorage.setItem('valuecont', JSON.stringify(nuevoContador));
-        localStorage.setItem('valuePrice', JSON.stringify(nuevoValorTotal));
-    };
+    localStorage.setItem('valuecont', JSON.stringify(nuevoContador));
+    localStorage.setItem('valuePrice', JSON.stringify(nuevoValorTotal));
+};
+    
 
     useEffect(() => {
         setpriceamount(ValorTotal);
@@ -68,9 +70,9 @@ export default function ProductItem({ price, title, description, images, categor
                 </div>
             </ul>
             <div className='contador-'>
-                <button className='less' onClick={() => actualizarCantidad('restar')}>-</button>
+                <button className='less' onClick={() => handleActualizarCantidad('restar')}>-</button>
                 <button className='amount'>{contador}</button>
-                <button className='further' onClick={() => actualizarCantidad('sumar')}>+</button>
+                <button className='further' onClick={() => handleActualizarCantidad('sumar')}>+</button>
             </div>
         </div>
     );

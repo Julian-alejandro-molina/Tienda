@@ -45,3 +45,17 @@
     height: 1.5rem;
 
 }
+.contador-carrito{
+    width: 1rem;
+    height: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(253, 201, 201);
+    position: absolute;
+    margin-left: 20.1rem;
+    margin-top: 3rem;
+    font-size: 10px;
+    border-radius: 5px;
+    color:aliceblue
+}

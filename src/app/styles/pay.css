@@ -27,9 +27,18 @@
    color: rgb(21, 83, 63);
    
 }
+.buttCompra:hover{
+    border: none;
+    border-radius: 0.5rem;
+    background-color: rgb(143, 245, 211);
+    color: rgb(41, 133, 104);
+    
+ }
 input{
     outline-style: none;
+    color: rgb(78, 78, 78);
 }
+
 .closer{
     margin-left: 25rem;
     cursor: pointer;
